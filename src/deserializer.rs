@@ -89,7 +89,7 @@ where
     D: de::Deserializer<'de>,
 {
     if let Ok(s) = de::Deserialize::deserialize(deserializer) {
-        Ok(Some(Condition::from(s)))
+        Ok(Some(s))
     } else {
         Ok(Some(Condition::New))
     }
