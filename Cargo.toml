@@ -9,12 +9,12 @@ serde_with = "3.9"
 serde_json = "1.0"
 derivative = "2.2"
 chrono = {version="0.4", default-features = false, features = ["serde", "clock"]}
-bincode = {version="1.3", optional=true}
+bincode = {version="2.0.0-rc.3", features=["serde"], optional=true}
 merge = { features = ["derive"], version = "0.1", optional = true }
 strum = {version="0.26", features=["derive"], optional=true}
 cfg-if = "1.0"
 [features]
-default=[]
+default=["merge"]
 bincode=["dep:bincode"]
 merge=["dep:merge"]
 lang-fr=[]
@@ -48,4 +48,4 @@ rakuten=[]
 dilicom=["ef_libelle", "ef_auteur", "ef_collection", "ef_isbnediteur", "ef_theme", "ef_last-modif", "ef_datedeparution", "ef_fincommerce", "ef_title", "ef_stock_origin", "ef_advised_price", "bnf", "ef_theme_code", "ef_presentation_editeur", "des_opt_bool"]
 ## Gestion Stock per Emplacement
 ## Allows more fine tuned stock location management.
-gse=[]
+gse=["ser_opt_bool_to_int"]

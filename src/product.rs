@@ -23,6 +23,8 @@ use crate::deserializer::from_optional_timestamp;
 use crate::deserializer::deserialize_optional_bool;
 #[cfg(feature = "condition")]
 use crate::deserializer::deserialize_state;
+#[cfg(feature = "ser_opt_bool_to_int")]
+use crate::deserializer::serialize_optional_bool_to_integer;
 #[skip_serializing_none]
 #[derive(Deserialize, Serialize, Debug, Clone, Derivative)]
 #[cfg_attr(feature = "bincode", derive(Encode))]
@@ -91,7 +93,7 @@ pub struct Product {
     )]
     pub stock: Option<i32>,
     pub barcode: Option<String>,
-    #[cfg_attr(feature = "merge", derive(Merge))]
+    #[cfg_attr(feature = "merge", merge(skip))]
     #[serde(deserialize_with = "deserialize_bool", rename = "status_buy")]
     pub tobuy: bool,
     #[cfg_attr(feature = "merge", merge(skip))]
@@ -163,6 +165,7 @@ pub struct ProductExtraFields {
     #[cfg(feature = "dilicom")]
     #[serde(rename = "options_distri")]
     pub distri: Option<String>,
+    #[cfg(feature = "gse")]
     #[serde(
         deserialize_with = "deserialize_optional_bool",
         rename = "options_gse_statut",
@@ -170,7 +173,6 @@ pub struct ProductExtraFields {
     )]
     #[derivative(Default(value = "Some(true)"))]
     #[serialize_always]
-    #[cfg(feature = "gse")]
     pub gse_statut: Option<bool>,
     #[cfg(feature = "ef_public_cible")]
     #[serde(rename = "options_public_cible")]

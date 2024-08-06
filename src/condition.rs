@@ -6,7 +6,7 @@ use strum::EnumIter;
 use strum::FromRepr;
 use strum::IntoEnumIterator;
 #[derive(Deserialize, Serialize, Debug, Clone, PartialEq, EnumIter, FromRepr)]
-#[cfg_attr(feature = "bincode", derive(Encode))]
+#[cfg_attr(feature = "bincode", derive(bincode::Encode))]
 #[repr(u8)]
 pub enum Condition {
     New,
