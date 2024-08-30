@@ -1,4 +1,4 @@
 #[cfg(feature = "condition")]
-mod condition;
+pub mod condition;
 mod deserializer;
 pub mod product;
