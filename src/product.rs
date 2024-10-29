@@ -5,7 +5,7 @@ use bincode::Encode;
 #[cfg(feature = "des_opt_timestamp")]
 use chrono::NaiveDate;
 #[cfg(feature = "merge")]
-use merge::Merge;
+use struct_patch::Patch;
 
 use chrono::NaiveDateTime;
 use derivative::Derivative;
@@ -28,16 +28,16 @@ use crate::deserializer::serialize_optional_bool_to_integer;
 #[skip_serializing_none]
 #[derive(Deserialize, Serialize, Debug, Clone, Derivative)]
 #[cfg_attr(feature = "bincode", derive(Encode))]
-#[cfg_attr(feature = "merge", derive(Merge))]
+#[cfg_attr(feature = "merge", derive(Patch))]
 #[derivative(Default)]
 pub struct Product {
-    #[cfg_attr(feature = "merge", merge(skip))]
+    #[cfg_attr(feature = "merge", patch(skip))]
     #[serde(deserialize_with = "from_str", rename = "id")]
     pub rowid: u32,
-    #[cfg_attr(feature = "merge", merge(skip))]
+    #[cfg_attr(feature = "merge", patch(skip))]
     #[serde(rename = "ref")]
     pub reference: String,
-    #[cfg_attr(feature = "merge", merge(skip))]
+    #[cfg_attr(feature = "merge", patch(skip))]
     pub label: String,
     #[serde(
         deserialize_with = "from_optional_naivedatetime",
@@ -74,7 +74,7 @@ pub struct Product {
     #[serde(deserialize_with = "from_str_optional", rename = "height_units")]
     #[derivative(Default(value = "Some(-3)"))]
     pub epaisseur_units: Option<i8>,
-    #[cfg_attr(feature = "merge", merge(skip))]
+    #[cfg_attr(feature = "merge", patch(skip))]
     #[serde(deserialize_with = "from_str_tof32")]
     pub price: f32,
     #[serde(deserialize_with = "from_str_optional")]
@@ -93,10 +93,10 @@ pub struct Product {
     )]
     pub stock: Option<i32>,
     pub barcode: Option<String>,
-    #[cfg_attr(feature = "merge", merge(skip))]
+    #[cfg_attr(feature = "merge", patch(skip))]
     #[serde(deserialize_with = "deserialize_bool", rename = "status_buy")]
     pub tobuy: bool,
-    #[cfg_attr(feature = "merge", merge(skip))]
+    #[cfg_attr(feature = "merge", patch(skip))]
     #[serde(deserialize_with = "deserialize_bool", rename = "status")]
     #[derivative(Default(value = "true"))]
     pub tosell: bool,
@@ -106,8 +106,8 @@ pub struct Product {
 #[cfg_attr(feature = "bincode", derive(Encode))]
 #[serde_as]
 #[skip_serializing_none]
-#[cfg_attr(feature = "merge", derive(Merge))]
-#[derive(Deserialize, Serialize, Debug, Clone, Derivative)]
+#[cfg_attr(feature = "merge", derive(Patch))]
+#[derive(Deserialize, Serialize, Debug, Clone, Derivative, PartialEq)]
 #[derivative(Default)]
 pub struct ProductExtraFields {
     #[cfg(feature = "ef_libelle")]
@@ -159,7 +159,7 @@ pub struct ProductExtraFields {
     #[serde(rename = "options_emplacement_gse")]
     pub emplacement_gse: Option<String>,
     #[cfg(feature = "ef_stock_origin")]
-    #[cfg_attr(feature = "merge", merge(skip))]
+    #[cfg_attr(feature = "merge", patch(skip))]
     #[serde(rename = "options_stock_origine")]
     pub stock_origine: String,
     #[cfg(feature = "dilicom")]

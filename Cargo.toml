@@ -10,13 +10,14 @@ serde_json = "1.0"
 derivative = "2.2"
 chrono = {version="0.4", default-features = false, features = ["serde", "clock"]}
 bincode = {version="2.0.0-rc.3", features=["serde"], optional=true}
-merge = { features = ["derive"], version = "0.1", optional = true }
+# merge = { features = ["derive"], version = "0.1", optional = true }
+struct-patch = {version="0.8", features=["merge"], optional = true }
 strum = {version="0.26", features=["derive"], optional=true}
 cfg-if = "1.0"
 [features]
 default=["merge"]
 bincode=["dep:bincode"]
-merge=["dep:merge"]
+merge=["dep:struct-patch"]
 lang-fr=[]
 ## ExtraFields
 bnf=[]
